@@ -1,12 +1,16 @@
 -- Lua 5.1+ base64 v3.0 (c) 2009 by Alex Kloss <alexthkloss@web.de>
 -- licensed under the terms of the LGPL2
 -- found at http://lua-users.org/wiki/BaseSixtyFour
+--
+-- modified 2025 by Evan Johnson
+
+local base64 = {}
 
 -- character table string
 local b='ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/'
 
 -- encoding
-function enc(data)
+function base64.enc(data)
     return ((data:gsub('.', function(x) 
         local r,b='',x:byte()
         for i=8,1,-1 do r=r..(b%2^i-b%2^(i-1)>0 and '1' or '0') end
@@ -20,7 +24,7 @@ function enc(data)
 end
 
 -- decoding
-function dec(data)
+function base64.dec(data)
     data = string.gsub(data, '[^'..b..'=]', '')
     return (data:gsub('.', function(x)
         if (x == '=') then return '' end
@@ -43,9 +47,9 @@ if (arg ~= nil) then
 			if (v == "-h") then print "base64.lua [-e] [-d] text/data" break
 			elseif (v == "-e") then func = 'enc'
 			elseif (v == "-d") then func = 'dec'
-			else print(_G[func](v)) end
+			else print(base64[func](v)) end
 		end
 	end
 else
-	module('base64',package.seeall)
+	return base64
 end
