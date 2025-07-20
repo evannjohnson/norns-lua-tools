@@ -1,7 +1,10 @@
 A repository containing useful lua tools, for use on the monome norns sound computer.
 
 # installation
-The repo should be cloned into a directory named `tools`
+The repo should be cloned into `code/tools`, ex. while SSHed into norns run
+```sh
+git clone https://github.com/evannjohnson/norns-lua-tools.git /home/we/dust/code/tools
+```
 
 # usage
 - load all tools with `include(tools/tools)`
