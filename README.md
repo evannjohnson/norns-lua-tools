@@ -17,4 +17,23 @@ git clone https://github.com/evannjohnson/norns-lua-tools.git /home/we/dust/code
 - [Penlight](https://github.com/lunarmodules/Penlight)
 
 # notes
-- Some Penlight modules depend on luafilesystem, a C module. I compiled `lfs.so` on norns by cloning [the luafilesystem repo](https://github.com/lunarmodules/luafilesystem), setting the lua version in the `config` file to 5.3, building it, and placing it in the `bin` folder. `pl/path.lua` appends to `package.cpath` so that lua can find `lfs.so` in this location.
+## compilation
+- compiled `.so` files go into `./bin`, and `package.cpath` needs to have this dir appended to it, `require("tools.add_tools_cpath")()` will accomplish this
+  - I have added this to some of the files when it is needed
+- Penlight
+  - Some Penlight modules depend on luafilesystem, a C module. I compiled `lfs.so` on norns by cloning [the luafilesystem repo](https://github.com/lunarmodules/luafilesystem), setting the lua version in the `config` file to 5.3, building it, and placing it in the `bin` folder. `pl/path.lua` appends to `package.cpath` so that lua can find `lfs.so` in this location.
+- luasocket
+```sh
+git clone https://github.com/lunarmodules/luasocket/
+cd luasocket
+make LUAV=5.3
+cd src
+mv socket.lua ltn12.lua mime.lua ../../.
+mkdir -p ../../socket
+mv http.lua url.lua tp.lua ftp.lua headers.lua smtp.lua unix.so serial.so ../../socket/
+mkdir -p ../../bin/socket
+mv socket-3.1.0.so ../../bin/socket/core.so
+mkdir -p ../../bin/mime
+mv mime-1.0.3.so ../../bin/mime/core.so
+```
+  - modify `socket.lua` to call `add_tools_cpath`

@@ -21,7 +21,7 @@ local append, concat, remove = table.insert, table.concat, table.remove
 local utils = require 'tools.pl.utils'
 local assert_string,raise = utils.assert_string,utils.raise
 
-package.cpath=package.cpath..";/home/we/dust/code/tools/bin/?.so"
+require("tools.add_tools_cpath")()
 local res,lfs = _G.pcall(_G.require,'lfs')
 if not res then
     error("tools.pl.path requires LuaFileSystem")
