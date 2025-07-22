@@ -1,1 +1,1 @@
-require('tools.pl.import_into')()
+return require('tools.pl.import_into')()
